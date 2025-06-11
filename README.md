@@ -34,6 +34,8 @@ Depuis le tableau de bord (premier onglet), appuyez sur **"🎯 Tester l'App"**.
 
 ## Limitations de la démo
 
-Cette version stocke toutes les données uniquement en local via `AsyncStorage`. Aucune synchronisation ou sauvegarde distante n'est effectuée et les informations seront perdues si vous réinstallez l'application.
+Cette version stocke toutes les données uniquement en local via `AsyncStorage`. Une API est toutefois disponible pour s'authentifier et synchroniser les informations, mais ces appels sont désactivés par défaut. Les données ne seront donc pas sauvegardées en ligne et seront perdues si vous réinstallez l'application.
 
-Certaines fonctionnalités comme l'import/export complet ou la synchronisation cloud sont présentées dans l'interface mais ne sont pas implémentées dans cette démo.
+Certaines fonctionnalités comme l'import/export complet ou la synchronisation cloud sont présentées dans l'interface, mais la connexion à l'API reste optionnelle dans cette démo.
+
+Pour utiliser votre propre serveur, remplacez l'URL `https://example.com` dans `contexts/AppContext.tsx` par celle de votre API. Connectez-vous ensuite depuis l'écran de connexion pour récupérer un token via l'endpoint `/api/login`. Ce token sera enregistré automatiquement et utilisé pour charger vos données (`/api/data`) puis les synchroniser (`/api/sync`).

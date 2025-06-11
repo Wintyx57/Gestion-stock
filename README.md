@@ -22,7 +22,14 @@ Gestion-stock est une petite démonstration d'application mobile réalisée avec
    ```bash
    npm run dev
    ```
+
 3. Scannez le QR code affiché ou démarrez un émulateur pour ouvrir l'application.
+
+## Configuration de l'API
+
+L'application communique avec un serveur distant pour la connexion et la
+synchronisation. L'URL de base peut être modifiée dans le fichier
+`app.config.ts` en changeant la valeur de `API_BASE_URL`.
 
 ## Lancer l'application
 

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { API_BASE_URL } from '@/app.config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SecureStore from 'expo-secure-store';
 import { Product, Alert, AppSettings, ToastMessage } from '@/types';
@@ -156,7 +157,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   const fetchRemoteData = async (token: string) => {
     try {
-      const res = await fetch('https://example.com/api/data', {
+      const res = await fetch(`${API_BASE_URL}/data`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (!res.ok) return;
@@ -172,7 +173,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const syncToCloud = async () => {
     if (!authToken) return;
     try {
-      await fetch('https://example.com/api/sync', {
+      await fetch(`${API_BASE_URL}/sync`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -192,7 +193,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     }
 
     try {
-      const res = await fetch('https://example.com/api/login', {
+      const res = await fetch(`${API_BASE_URL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })

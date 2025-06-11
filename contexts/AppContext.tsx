@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SecureStore from 'expo-secure-store';
 import { Product, Alert, AppSettings, ToastMessage } from '@/types';
 
 interface AppContextType {
@@ -51,6 +52,7 @@ interface AppProviderProps {
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userEmail, setUserEmail] = useState('');
+  const [authToken, setAuthToken] = useState<string | null>(null);
   const [products, setProducts] = useState<Product[]>([]);
   const [suppliers, setSuppliers] = useState<string[]>([]);
   const [alerts, setAlerts] = useState<Alert[]>([]);
@@ -74,6 +76,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   useEffect(() => {
     if (isAuthenticated) {
       saveDataToStorage();
+      syncToCloud();
     }
   }, [products, suppliers, settings, isAuthenticated]);
 
@@ -102,6 +105,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const loadStoredData = async () => {
     try {
       const storedAuth = await AsyncStorage.getItem('auth');
+      const storedToken = await SecureStore.getItemAsync('token');
       const storedProducts = await AsyncStorage.getItem('products');
       const storedSuppliers = await AsyncStorage.getItem('suppliers');
       const storedSettings = await AsyncStorage.getItem('settings');
@@ -110,6 +114,14 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         const authData = JSON.parse(storedAuth);
         setIsAuthenticated(authData.isAuthenticated);
         setUserEmail(authData.userEmail);
+      }
+
+      if (storedToken) {
+        setAuthToken(storedToken);
+        if (!storedAuth) {
+          setIsAuthenticated(true);
+        }
+        await fetchRemoteData(storedToken);
       }
 
       if (storedProducts) {
@@ -142,20 +154,71 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     }
   };
 
-  const login = (email: string, password: string) => {
-    if (email && password) {
+  const fetchRemoteData = async (token: string) => {
+    try {
+      const res = await fetch('https://example.com/api/data', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (!res.ok) return;
+      const data = await res.json();
+      if (data.products) setProducts(data.products);
+      if (data.suppliers) setSuppliers(data.suppliers);
+      if (data.settings) setSettings(prev => ({ ...prev, ...data.settings }));
+    } catch (err) {
+      console.error('Failed to fetch remote data', err);
+    }
+  };
+
+  const syncToCloud = async () => {
+    if (!authToken) return;
+    try {
+      await fetch('https://example.com/api/sync', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${authToken}`
+        },
+        body: JSON.stringify({ products, suppliers, settings })
+      });
+    } catch (err) {
+      console.error('Sync error', err);
+    }
+  };
+
+  const login = async (email: string, password: string) => {
+    if (!email || !password) {
+      showToast('❌ Veuillez remplir tous les champs', 'error');
+      return;
+    }
+
+    try {
+      const res = await fetch('https://example.com/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      if (!res.ok) throw new Error('Bad credentials');
+
+      const data = await res.json();
+      await SecureStore.setItemAsync('token', data.token);
+      setAuthToken(data.token);
       setIsAuthenticated(true);
       setUserEmail(email);
       setSettings(prev => ({ ...prev, userEmail: email }));
+      await fetchRemoteData(data.token);
       showToast('✅ Connexion réussie !', 'success');
-    } else {
-      showToast('❌ Veuillez remplir tous les champs', 'error');
+    } catch (err) {
+      console.error('Login error', err);
+      showToast('❌ Échec de la connexion', 'error');
     }
   };
 
   const logout = () => {
     setIsAuthenticated(false);
     setUserEmail('');
+    setAuthToken(null);
+    SecureStore.deleteItemAsync('token');
     AsyncStorage.clear();
     showToast('👋 Déconnexion réussie', 'info');
   };

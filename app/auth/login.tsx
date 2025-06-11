@@ -20,10 +20,6 @@ export default function LoginScreen() {
     }
   };
 
-  const handleDemoLogin = () => {
-    login('demo@stockpro.com', 'demo123');
-    router.replace('/(tabs)/');
-  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -76,16 +72,6 @@ export default function LoginScreen() {
                 </LinearGradient>
               </TouchableOpacity>
               
-              <View style={styles.divider}>
-                <View style={styles.dividerLine} />
-                <Text style={styles.dividerText}>ou</Text>
-                <View style={styles.dividerLine} />
-              </View>
-              
-              <TouchableOpacity style={styles.demoButton} onPress={handleDemoLogin}>
-                <Text style={styles.demoButtonText}>🎯 Essai rapide (Mode démo)</Text>
-              </TouchableOpacity>
-              
               <TouchableOpacity
                 style={styles.toggleButton}
                 onPress={() => setIsNewUser(!isNewUser)}
@@ -94,13 +80,12 @@ export default function LoginScreen() {
                   {isNewUser ? 'Déjà un compte ?' : 'Créer un compte'}
                 </Text>
               </TouchableOpacity>
-              
+
               {isNewUser && (
                 <View style={styles.noteCard}>
                   <Text style={styles.noteText}>
-                    <Text style={styles.noteTitle}>Note :</Text> Dans cette version de démonstration, 
-                    entrez simplement un email et un mot de passe pour tester. Dans la version de production, 
-                    vos données seront sauvegardées et synchronisées entre tous vos appareils.
+                    <Text style={styles.noteTitle}>Note :</Text> Votre compte vous permet de
+                    sauvegarder et synchroniser vos données entre tous vos appareils.
                   </Text>
                 </View>
               )}
@@ -198,34 +183,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
-  },
-  divider: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 8,
-  },
-  dividerLine: {
-    flex: 1,
-    height: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-  },
-  dividerText: {
-    marginHorizontal: 16,
-    fontSize: 14,
-    color: 'rgba(255, 255, 255, 0.7)',
-  },
-  demoButton: {
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.2)',
-    paddingVertical: 16,
-    borderRadius: 12,
-    alignItems: 'center',
-  },
-  demoButtonText: {
-    fontSize: 16,
     fontWeight: 'bold',
     color: '#FFFFFF',
   },

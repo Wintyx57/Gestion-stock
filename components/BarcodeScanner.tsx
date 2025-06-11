@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import { Camera, CameraView, useCameraPermissions } from 'expo-camera';
+import { CameraView, useCameraPermissions } from 'expo-camera';
 import { X, Flashlight, FlashlightOff } from 'lucide-react-native';
 import { useApp } from '@/contexts/AppContext';
 
@@ -11,7 +11,6 @@ interface BarcodeScannerProps {
 
 export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({ onClose, onScanned }) => {
   const [permission, requestPermission] = useCameraPermissions();
-  const [hasFlash, setHasFlash] = useState(false);
   const [flashOn, setFlashOn] = useState(false);
   const [scanned, setScanned] = useState(false);
   const { showToast } = useApp();
@@ -58,6 +57,7 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({ onClose, onScann
       <CameraView
         style={styles.camera}
         facing="back"
+        torch={flashOn ? "on" : "off"}
         onBarcodeScanned={handleBarCodeScanned}
         barcodeScannerSettings={{
           barcodeTypes: ['ean13', 'ean8', 'upc_a', 'upc_e', 'code128', 'code39'],

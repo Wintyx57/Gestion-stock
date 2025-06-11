@@ -37,3 +37,14 @@ Depuis le tableau de bord (premier onglet), appuyez sur **"🎯 Tester l'App"**.
 Cette version stocke toutes les données uniquement en local via `AsyncStorage`. Aucune synchronisation ou sauvegarde distante n'est effectuée et les informations seront perdues si vous réinstallez l'application.
 
 Certaines fonctionnalités comme l'import/export complet ou la synchronisation cloud sont présentées dans l'interface mais ne sont pas implémentées dans cette démo.
+
+## Tests automatisés
+
+Une petite suite de tests Jest vérifie le fonctionnement du contexte `AppContext`.
+Pour l'exécuter après avoir installé les dépendances :
+
+```bash
+npm test
+```
+
+Jest lance alors tous les tests présents dans le dossier `__tests__`.

@@ -8,7 +8,6 @@ import { router } from 'expo-router';
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isNewUser, setIsNewUser] = useState(false);
   const { login, showToast } = useApp();
 
   const handleLogin = () => {
@@ -71,24 +70,7 @@ export default function LoginScreen() {
                   <Text style={styles.buttonText}>Se connecter</Text>
                 </LinearGradient>
               </TouchableOpacity>
-              
-              <TouchableOpacity
-                style={styles.toggleButton}
-                onPress={() => setIsNewUser(!isNewUser)}
-              >
-                <Text style={styles.toggleButtonText}>
-                  {isNewUser ? 'Déjà un compte ?' : 'Créer un compte'}
-                </Text>
-              </TouchableOpacity>
 
-              {isNewUser && (
-                <View style={styles.noteCard}>
-                  <Text style={styles.noteText}>
-                    <Text style={styles.noteTitle}>Note :</Text> Votre compte vous permet de
-                    sauvegarder et synchroniser vos données entre tous vos appareils.
-                  </Text>
-                </View>
-              )}
               
               <View style={styles.securityCard}>
                 <Text style={styles.securityText}>
@@ -183,30 +165,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
-  },
-  toggleButton: {
-    alignItems: 'center',
-    paddingVertical: 12,
-  },
-  toggleButtonText: {
-    fontSize: 14,
-    color: 'rgba(255, 255, 255, 0.8)',
-    textDecorationLine: 'underline',
-  },
-  noteCard: {
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    borderRadius: 12,
-    padding: 16,
-    marginTop: 8,
-  },
-  noteText: {
-    fontSize: 12,
-    color: 'rgba(255, 255, 255, 0.8)',
-    lineHeight: 18,
-  },
-  noteTitle: {
     fontWeight: 'bold',
     color: '#FFFFFF',
   },

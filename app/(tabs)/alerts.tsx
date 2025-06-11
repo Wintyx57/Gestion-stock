@@ -4,13 +4,46 @@ import { AlertTriangle, Download, ArrowRight } from 'lucide-react-native';
 import { useApp } from '@/contexts/AppContext';
 import { Alert } from '@/types';
 import { router } from 'expo-router';
+import * as FileSystem from 'expo-file-system';
+import * as Sharing from 'expo-sharing';
 
 export default function AlertsScreen() {
   const { alerts, products, showToast } = useApp();
 
-  const handleExportAlerts = () => {
+  const handleExportAlerts = async () => {
     showToast('📊 Export des alertes en cours...', 'info');
-    // TODO: Implement export functionality
+
+    try {
+      const header = 'Type;Produit;Stock;Seuil;Emplacement;Fournisseur\n';
+      const rows = alerts.map(alert => {
+        const prod = products.find(p => p.id === alert.productId);
+        return [
+          alert.type === 'out' ? 'Rupture' : 'Stock faible',
+          prod?.name ?? '',
+          prod?.currentStock ?? '',
+          prod?.alertThreshold ?? '',
+          prod?.location ?? '',
+          prod?.supplier ?? ''
+        ].join(';');
+      });
+      const csv = header + rows.join('\n');
+
+      const fileUri =
+        FileSystem.cacheDirectory + `alerts-${Date.now()}.csv`;
+      await FileSystem.writeAsStringAsync(fileUri, csv, {
+        encoding: FileSystem.EncodingType.UTF8
+      });
+
+      if (await Sharing.isAvailableAsync()) {
+        await Sharing.shareAsync(fileUri);
+        showToast('✅ Export prêt à être partagé', 'success');
+      } else {
+        showToast('❌ Partage non disponible sur cette plateforme', 'error');
+      }
+    } catch (e) {
+      console.error(e);
+      showToast('❌ Erreur lors de l\'export des alertes', 'error');
+    }
   };
 
   const renderAlert = ({ item }: { item: Alert }) => {

@@ -10,12 +10,15 @@ export default function LoginScreen() {
   const [password, setPassword] = useState('');
   const { login, showToast } = useApp();
 
-  const handleLogin = () => {
-    if (email && password) {
-      login(email, password);
-      router.replace('/(tabs)/');
-    } else {
+  const handleLogin = async () => {
+    if (!email || !password) {
       showToast('❌ Veuillez remplir tous les champs', 'error');
+      return;
+    }
+
+    const success = await login(email, password);
+    if (success) {
+      router.replace('/(tabs)/');
     }
   };
 

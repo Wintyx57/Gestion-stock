@@ -2,9 +2,14 @@
   "compilerOptions": {
     "target": "es2018",
     "module": "esnext",
+    "moduleResolution": "node",
     "lib": ["es2018", "dom"],
-    "jsx": "react",
+    "jsx": "react-jsx",
     "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "types": ["expo", "node"],
+    "skipLibCheck": true,
     "paths": {
       "@/*": ["./*"]
     }

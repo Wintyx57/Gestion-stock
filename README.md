@@ -41,10 +41,16 @@ Certaines fonctionnalités comme l'import/export complet ou la synchronisation c
 ## Tests automatisés
 
 Une petite suite de tests Jest vérifie le fonctionnement du contexte `AppContext`.
-Pour l'exécuter après avoir installé les dépendances :
+Commencez par installer les dépendances :
+
+```bash
+npm install
+```
+
+Lancez ensuite :
 
 ```bash
 npm test
 ```
 
-Jest lance alors tous les tests présents dans le dossier `__tests__`.
+Jest exécute alors tous les tests présents dans le dossier `__tests__`.

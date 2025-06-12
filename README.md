@@ -22,6 +22,10 @@ Gestion-stock est une petite démonstration d'application mobile réalisée avec
    ```bash
    npm run dev
    ```
+3. (Optionnel) Vérifiez la qualité du code avec ESLint :
+   ```bash
+   npm run lint
+   ```
 
 3. Scannez le QR code affiché ou démarrez un émulateur pour ouvrir l'application.
 
@@ -38,6 +42,15 @@ synchronisation. L'URL de base peut être modifiée dans le fichier
 ### Charger les données d'exemple
 
 Depuis le tableau de bord (premier onglet), appuyez sur **"🎯 Tester l'App"**. Quatre produits seront ajoutés automatiquement afin de découvrir les écrans sans importer de catalogue.
+
+### Linting du projet
+
+Pour analyser le code avec ESLint, lancez :
+
+```bash
+npm run lint
+```
+Cette commande utilise l'outil Expo CLI si disponible.
 
 ## Limitations de la démo
 

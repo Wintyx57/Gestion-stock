@@ -33,7 +33,7 @@ synchronisation. L'URL de base peut être modifiée dans le fichier
 
 ## Lancer l'application
 
-À la première ouverture, une page de connexion s'affiche. Pour la démo, entrez n'importe quel email et mot de passe ou utilisez le bouton **"Essai rapide"** pour accéder directement à l'interface.
+À la première ouverture, une page de connexion s'affiche. Pour la démo, entrez simplement un email et un mot de passe pour accéder à l'interface.
 
 ### Charger les données d'exemple
 

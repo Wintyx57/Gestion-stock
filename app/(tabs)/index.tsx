@@ -16,7 +16,7 @@ export default function DashboardScreen() {
     outOfStock: products.filter(p => p.stockInitialized && p.currentStock === 0).length
   };
 
-  const StatCard = ({ title, value, icon: Icon, colors }: { title: string; value: string | number; icon: any; colors: string[] }) => (
+  const StatCard = ({ title, value, icon: Icon, colors }: { title: string; value: string | number; icon: any; colors: [string, string, ...string[]] }) => (
     <View style={styles.statCard}>
       <LinearGradient colors={colors} style={styles.statGradient}>
         <View style={styles.statContent}>

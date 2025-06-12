@@ -57,7 +57,6 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({ onClose, onScann
       <CameraView
         style={styles.camera}
         facing="back"
-        torch={flashOn ? "on" : "off"}
         onBarcodeScanned={handleBarCodeScanned}
         barcodeScannerSettings={{
           barcodeTypes: ['ean13', 'ean8', 'upc_a', 'upc_e', 'code128', 'code39'],

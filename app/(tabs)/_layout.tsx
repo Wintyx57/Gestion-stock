@@ -1,3 +1,4 @@
+import React from 'react';
 import { Tabs } from 'expo-router';
 import { Package, BarChart3, AlertTriangle, Settings, Zap } from 'lucide-react-native';
 import { useApp } from '@/contexts/AppContext';

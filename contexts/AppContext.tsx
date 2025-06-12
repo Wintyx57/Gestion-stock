@@ -8,7 +8,7 @@ interface AppContextType {
   // Authentication
   isAuthenticated: boolean;
   userEmail: string;
-  login: (email: string, password: string) => void;
+  login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
   
   // Products & Suppliers
@@ -186,10 +186,10 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     }
   };
 
-  const login = async (email: string, password: string) => {
+  const login = async (email: string, password: string): Promise<boolean> => {
     if (!email || !password) {
       showToast('❌ Veuillez remplir tous les champs', 'error');
-      return;
+      return false;
     }
 
     try {
@@ -209,9 +209,11 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       setSettings(prev => ({ ...prev, userEmail: email }));
       await fetchRemoteData(data.token);
       showToast('✅ Connexion réussie !', 'success');
+      return true;
     } catch (err) {
       console.error('Login error', err);
       showToast('❌ Échec de la connexion', 'error');
+      return false;
     }
   };
 

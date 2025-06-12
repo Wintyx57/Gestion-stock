@@ -7,7 +7,7 @@ interface AppContextType {
   // Authentication
   isAuthenticated: boolean;
   userEmail: string;
-  login: (email: string, password: string) => void;
+  login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   
   // Products & Suppliers

@@ -38,6 +38,10 @@ Cette version stocke toutes les données uniquement en local via `AsyncStorage`.
 
 Certaines fonctionnalités comme l'import/export complet ou la synchronisation cloud sont présentées dans l'interface mais ne sont pas implémentées dans cette démo.
 
+## Contribution
+
+Les pull requests sont les bienvenues. Pour les changements majeurs, veuillez d'abord ouvrir une issue pour en discuter.
+
 ## Tests automatisés
 
 Une petite suite de tests Jest vérifie le fonctionnement du contexte `AppContext`.

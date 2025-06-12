@@ -46,3 +46,8 @@ Cette version stocke toutes les données uniquement en local via `AsyncStorage`.
 Certaines fonctionnalités comme l'import/export complet ou la synchronisation cloud sont présentées dans l'interface, mais la connexion à l'API reste optionnelle dans cette démo.
 
 Pour utiliser votre propre serveur, remplacez l'URL `https://example.com` dans `contexts/AppContext.tsx` par celle de votre API. Connectez-vous ensuite depuis l'écran de connexion pour récupérer un token via l'endpoint `/api/login`. Ce token sera enregistré automatiquement et utilisé pour charger vos données (`/api/data`) puis les synchroniser (`/api/sync`).
+
+## Licence
+
+Ce projet est distribué sous licence [MIT](LICENSE).
+
